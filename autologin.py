@@ -5,19 +5,17 @@ import configparser
 
 def getDetails():
         Config = configparser.ConfigParser()
-        Config.read("acc.ini") #single section Account and options Username, Password
+        Config.read("acc.ini") #single section Account and options Username, Password, Waittime
         try:
-                uname = Config.get("Account", "Username")
-                pword = Config.get("Account", "Password")
-                time = Config.get("Account", "Waittime")
-                if uname is None or pword is None or time is None:
+                details_list = [Config.get("Account", x) for x in ["Username", "Password", "Waittime"]]
+                if not all(details_list):
                         raise Exception
         except Exception as e:
                 print(e)
                 sys.exit()
 
         else:
-                return (uname, pword, time)
+                return details_list
 
 def login(acctuple):
         #need relevant webdriver in PATH, add and modify as needed
@@ -41,10 +39,13 @@ def login(acctuple):
 	login = browser.find_element_by_css_selector('#logincaption')
 	login.click()
 
+def main():
+        sys.stdout.write('Logging in...')
+        time.sleep(1)
+        acctuple = getDetails()
+        login(acctuple)
+        sys.stdout.write('You have logged in')
+        time.sleep(1)
 
-sys.stdout.write('Logging in...')
-time.sleep(1)
-acctuple = getDetails()
-login(acctuple)
-sys.stdout.write('You have logged in')
-time.sleep(1)
+if __name__ == '__main__':
+        main()
