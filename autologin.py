@@ -10,11 +10,14 @@ def getDetails():
                 uname = Config.get("Account", "Username")
                 pword = Config.get("Account", "Password")
                 time = Config.get("Account", "Waittime")
-                if (uname == -1) or (pword == -1):
-                        raise RuntimeError("Something not right in config file")
+                if uname is None or pword is None or time is None:
+                        raise Exception
         except Exception as e:
                 print(e)
-        return (uname, pword, time)
+                sys.exit()
+
+        else:
+                return (uname, pword, time)
 
 def login(acctuple):
         #need relevant webdriver in PATH, add and modify as needed
