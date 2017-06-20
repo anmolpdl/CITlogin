@@ -1,5 +1,8 @@
 A tool to login IOE Pulchowk's lan server using account details.
 
+Directions:
+Edit the acc.ini file to add your account details.
+
 Required Dependencies:
 Selenium
 ChromeDriver (or equivalent but need to modify inside the main .py)
